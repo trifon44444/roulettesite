@@ -18,11 +18,12 @@ const items = [
 ];
 
 const strip = document.getElementById("strip");
+const result = document.getElementById("result");
 
 let canSpin = true;
 
-// ===== создаём ленту ОДИН РАЗ =====
-function buildStrip(){
+// ===== 1. СТАТИЧНАЯ ЛЕНТА (НЕ ПЕРЕСОЗДАЁМ КАЖДЫЙ РАЗ) =====
+function initStrip(){
 strip.innerHTML = "";
 
 for(let i=0;i<200;i++){
@@ -40,69 +41,70 @@ strip.appendChild(div);
 }
 }
 
-// ===== выбираем победителя =====
+// ===== 2. ШАНСЫ =====
 function getWinIndex(){
 let pool = [];
 
 items.forEach((item, index)=>{
-let weight = Math.floor(item.chance * 20);
-
-for(let i=0;i<weight;i++){
-pool.push(index);
-}
+let weight = Math.max(1, Math.floor(item.chance * 20));
+for(let i=0;i<weight;i++) pool.push(index);
 });
 
 return pool[Math.floor(Math.random()*pool.length)];
 }
 
-// ===== SPIN =====
+// ===== 3. SPIN =====
 function spin(){
 
 if(!canSpin) return;
 canSpin = false;
 
-document.getElementById("result").innerText = "КРУТИМ...";
+result.innerText = "КРУТИМ...";
 
-// ❗ ВАЖНО: НЕ СТИРАЕМ ЛЕНТУ
+// ❗ ВАЖНО: НЕ УДАЛЯЕМ ЛЕНТУ
 if(strip.childElementCount === 0){
-buildStrip();
+initStrip();
 }
 
-// фиксируем старт
+// фиксируем стартовое положение
 strip.style.transition = "none";
 strip.style.transform = "translateX(0px)";
 
-// даём браузеру РЕНДЕР (ВАЖНО!)
+// даём браузеру отрисовать (ЭТО УБИРАЕТ ПРОПАДАНИЕ)
 requestAnimationFrame(()=>{
 
 requestAnimationFrame(()=>{
-
-strip.style.transition = "transform 6s cubic-bezier(.12,.8,.12,1)";
 
 let winIndex = getWinIndex();
 
 let cardWidth = 150;
-let centerPosition = window.innerWidth / 2;
 
+// центр экрана
+let center = window.innerWidth / 2;
+
+// позиция выигрыша
 let target = winIndex * cardWidth;
 
-let offset = centerPosition - target;
+// итоговый offset
+let offset = center - target;
 
+// запускаем анимацию
+strip.style.transition = "transform 6s cubic-bezier(.12,.8,.12,1)";
 strip.style.transform = `translateX(${offset}px)`;
 
-// результат (ТОЧНО ТОТ ЖЕ)
+// фикс результата (ТОЧНО ТОТ ЖЕ ИНДЕКС)
 let win = items[winIndex];
 
 setTimeout(()=>{
-
-document.getElementById("result").innerHTML =
+result.innerHTML =
 "🎉 Выпало: <b>"+win.name+"</b><br><img src='"+win.img+"' width='120'>";
-
 canSpin = true;
-
 },6000);
 
 });
 
 });
 }
+
+// старт
+initStrip();
