@@ -1,35 +1,46 @@
-.card img{
+body{
+margin:0;
+background:#0f0f0f;
+color:white;
+font-family:Arial;
+text-align:center;
+}
 
-width:220px;
+.main{
+padding:40px;
+}
 
-height:130px;
+#result{
+font-size:40px;
+margin:30px;
+}
 
-object-fit:cover;
+button{
+padding:15px 40px;
+font-size:22px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+background:#ffcc00;
+}
 
-border-radius:15px;
-
+.strip{
+display:flex;
+gap:15px;
+overflow:hidden;
+justify-content:center;
+margin-top:40px;
 }
 
 .card{
-
-background:#181818;
-
-padding:20px;
-
-border-radius:20px;
-
-min-width:260px;
-
+background:#1c1c1c;
+padding:15px;
+border-radius:15px;
+min-width:160px;
 }
 
-.prizes{
-
-display:flex;
-
-gap:30px;
-
-overflow-x:auto;
-
-padding:40px;
-
+.card img{
+width:140px;
+height:140px;
+object-fit:contain;
 }
