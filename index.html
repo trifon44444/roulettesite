@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Рулетка</title>
+<title>Case Roulette</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -10,15 +10,17 @@
 
 <div class="main">
 
-<h1>🎰 РУЛЕТКА</h1>
+<h1>🎰 CASE ROULETTE</h1>
 
-<div id="result">Нажми Крутить</div>
+<div id="pointer">▼</div>
 
-<div class="buttons">
-<button onclick="spin()">КРУТИТЬ</button>
+<div class="window">
+<div class="strip" id="strip"></div>
 </div>
 
-<div class="strip" id="strip"></div>
+<button onclick="spin()">КРУТИТЬ (500₽)</button>
+
+<div id="result">Готов к открытию</div>
 
 </div>
 
