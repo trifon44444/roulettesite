@@ -1,5 +1,5 @@
 const items = [
-{img:"5.png", name:"Рикардо", chance: 5},
+{img:"images/5.png", name:"Рикардо", chance: 5},
 {img:"35.png", name:"Школьник", chance: 10},
 {img:"36.png", name:"Школьник", chance: 10},
 {img:"47.png", name:"Адик", chance: 8},
