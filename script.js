@@ -1,46 +1,107 @@
-body{
-margin:0;
-background:#0f0f0f;
-color:white;
-font-family:Arial;
-text-align:center;
-}
+const prizes = [
+"5.png","35.png","36.png","47.png","51.png","269.png","270.png",
+"103.png","115.png","116.png","14195.png","14196.png","14197.png",
+"14200.png","14202.png","14206.png","14207.png",
+"14779.png","14780.png","14781.png","14797.png","14798.png",
+"15414.png","15421.png","15490.png",
+"15501.png","15519.png",
+"15736.png","15738.png","15739.png","15740.png",
+"15851.png","15888.png",
+"15902.png",
+"16224.png",
+"16463.png","16464.png","16465.png",
+"16600.png","16608.png","16665.png","16678.png","16679.png","16682.png",
+"16774.png","16779.png",
+"16866.png",
+"17249.png","17250.png","17251.png","17255.png","17256.png","17273.png",
+"17976.png","17996.png","17997.png",
+"18203.png","18895.png",
+"19.png","194.png","206.png",
+"79.png","8599.png","8793.png","94.png",
+"icon-gold-vip.png","icon-platinum-vip.png","icon-silver-vip.png"
+];
 
-.main{
-padding:40px;
-}
+const names = {
+"5.png":"Рикардо",
+"35.png":"Школьник",
+"36.png":"Школьник",
+"47.png":"Адик",
+"51.png":"Качок",
+"269.png":"Жиробас",
+"270.png":"Шоколадка",
+"103.png":"Донат",
+"115.png":"Модник",
+"116.png":"Араб",
+"14195.png":"Мешок",
+"14196.png":"Посох",
+"14197.png":"Посох",
+"14200.png":"Галстук",
+"14202.png":"Борода",
+"14206.png":"Звезды",
+"14207.png":"Рюкзак",
+"14779.png":"Крылья",
+"14780.png":"Крылья",
+"14781.png":"Крылья",
+"14797.png":"Gucci",
+"14798.png":"LV",
+"15414.png":"Супер сус",
+"15421.png":"Слава",
+"15490.png":"Тедди",
+"15501.png":"Босс",
+"15519.png":"Майрс",
+"15736.png":"Ёлка авто",
+"15738.png":"Сноуборд",
+"15739.png":"Багажник",
+"15740.png":"Круг",
+"15851.png":"Bape",
+"15888.png":"Кобура",
+"15902.png":"Шлем",
+"16224.png":"Кепка",
+"16463.png":"Скейт",
+"16464.png":"Скейт",
+"16465.png":"Скейт",
+"16600.png":"Рука",
+"16608.png":"Рюкзак",
+"16665.png":"Меч",
+"16678.png":"Скейт",
+"16679.png":"Скейт",
+"16682.png":"Меч",
+"16774.png":"Топор",
+"16779.png":"Плащ",
+"16866.png":"Бампер",
+"17249.png":"Рюкзак",
+"17250.png":"Бита",
+"17251.png":"Очки",
+"17255.png":"Наушники",
+"17256.png":"Bearbrick",
+"17273.png":"Гелик",
+"17976.png":"Венок",
+"17996.png":"Ушанка",
+"17997.png":"Ушанка",
+"18203.png":"Киса",
+"18895.png":"Лошадь",
+"19.png":"Баба",
+"194.png":"Хищник",
+"206.png":"Пацан",
+"79.png":"OffWhite",
+"8599.png":"Василич",
+"8793.png":"Броник",
+"94.png":"Рубашка",
+"icon-gold-vip.png":"VIP Gold",
+"icon-platinum-vip.png":"VIP Platinum",
+"icon-silver-vip.png":"VIP Silver"
+};
 
-#result{
-font-size:40px;
-margin:30px;
-}
+function spin(){
+let result = document.getElementById("result");
 
-button{
-padding:15px 40px;
-font-size:22px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-background:#ffcc00;
-}
+result.innerHTML = "КРУТИМ...";
 
-.strip{
-display:flex;
-gap:15px;
-overflow:hidden;
-justify-content:center;
-margin-top:40px;
-}
+let index = Math.floor(Math.random() * prizes.length);
 
-.card{
-background:#1c1c1c;
-padding:15px;
-border-radius:15px;
-min-width:160px;
-}
-
-.card img{
-width:140px;
-height:140px;
-object-fit:contain;
+setTimeout(() => {
+result.innerHTML =
+"<img src='" + prizes[index] + "' width='200'><br>" +
+names[prizes[index]];
+}, 2000);
 }
