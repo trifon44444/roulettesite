@@ -51,35 +51,41 @@ canSpin = false;
 
 result.innerText = "КРУТИМ...";
 
-// если вдруг пусто
-if(strip.childElementCount === 0){
 buildStrip();
-}
 
-// сброс позиции
+// твой старый старт
 strip.style.transition = "none";
 strip.style.transform = "translateX(0px)";
 
-// ждём отрисовку (фикс пропадания)
-requestAnimationFrame(()=>{
+// важно: даём DOM обновиться
+setTimeout(()=>{
 
-// ВЫБОР РЕЗУЛЬТАТА (ОДИН РАЗ)
+strip.style.transition = "transform 5s cubic-bezier(.1,.7,.1,1)";
+
+// ===== 1. ВЫБОР РЕЗУЛЬТАТА =====
 let winIndex = Math.floor(Math.random() * items.length);
 let win = items[winIndex];
 
+// ===== 2. ФИКС ШИРИНЫ =====
+let cardWidth = 140;
+
 // центр экрана
-let centerOffset = window.innerWidth / 2;
+let center = window.innerWidth / 2;
 
-// куда должен приехать элемент
-let target = winIndex * CARD_WIDTH;
+// ===== 3. ВАЖНЫЙ ФИКС "ДЫРЫ" =====
+// добавляем запас ленты, чтобы не улетало в пустоту
+let safePadding = 20 * cardWidth;
 
-// итоговый сдвиг
-let offset = centerOffset - target;
+// позиция победного элемента
+let target = winIndex * cardWidth;
 
-strip.style.transition = "transform 5s cubic-bezier(.1,.7,.1,1)";
+// итоговый offset (с защитой от пустоты)
+let offset = center - target + safePadding;
+
+// ===== 4. ДВИЖЕНИЕ =====
 strip.style.transform = `translateX(${offset}px)`;
 
-// результат = ТОЧНО ТОТ ЖЕ
+// ===== 5. РЕЗУЛЬТАТ =====
 setTimeout(()=>{
 
 result.innerHTML =
@@ -89,8 +95,5 @@ canSpin = true;
 
 },5000);
 
-});
+},50);
 }
-
-// старт
-buildStrip();
