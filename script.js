@@ -1,107 +1,86 @@
-const prizes = [
-"5.png","35.png","36.png","47.png","51.png","269.png","270.png",
-"103.png","115.png","116.png","14195.png","14196.png","14197.png",
-"14200.png","14202.png","14206.png","14207.png",
-"14779.png","14780.png","14781.png","14797.png","14798.png",
-"15414.png","15421.png","15490.png",
-"15501.png","15519.png",
-"15736.png","15738.png","15739.png","15740.png",
-"15851.png","15888.png",
-"15902.png",
-"16224.png",
-"16463.png","16464.png","16465.png",
-"16600.png","16608.png","16665.png","16678.png","16679.png","16682.png",
-"16774.png","16779.png",
-"16866.png",
-"17249.png","17250.png","17251.png","17255.png","17256.png","17273.png",
-"17976.png","17996.png","17997.png",
-"18203.png","18895.png",
-"19.png","194.png","206.png",
-"79.png","8599.png","8793.png","94.png",
-"icon-gold-vip.png","icon-platinum-vip.png","icon-silver-vip.png"
+const items = [
+{img:"5.png", name:"Рикардо", chance: 5},
+{img:"35.png", name:"Школьник", chance: 10},
+{img:"36.png", name:"Школьник", chance: 10},
+{img:"47.png", name:"Адик", chance: 8},
+{img:"51.png", name:"Качок", chance: 12},
+
+{img:"103.png", name:"Донат", chance: 3},
+{img:"115.png", name:"Модник", chance: 7},
+{img:"116.png", name:"Араб", chance: 7},
+
+{img:"14797.png", name:"Gucci", chance: 2},
+{img:"14798.png", name:"LV", chance: 2},
+
+{img:"15414.png", name:"Супер сус", chance: 1},
+{img:"15490.png", name:"Тедди", chance: 4},
+
+{img:"icon-gold-vip.png", name:"VIP Gold", chance: 1},
+{img:"icon-platinum-vip.png", name:"VIP Platinum", chance: 0.5},
+{img:"icon-silver-vip.png", name:"VIP Silver", chance: 2}
 ];
 
-const names = {
-"5.png":"Рикардо",
-"35.png":"Школьник",
-"36.png":"Школьник",
-"47.png":"Адик",
-"51.png":"Качок",
-"269.png":"Жиробас",
-"270.png":"Шоколадка",
-"103.png":"Донат",
-"115.png":"Модник",
-"116.png":"Араб",
-"14195.png":"Мешок",
-"14196.png":"Посох",
-"14197.png":"Посох",
-"14200.png":"Галстук",
-"14202.png":"Борода",
-"14206.png":"Звезды",
-"14207.png":"Рюкзак",
-"14779.png":"Крылья",
-"14780.png":"Крылья",
-"14781.png":"Крылья",
-"14797.png":"Gucci",
-"14798.png":"LV",
-"15414.png":"Супер сус",
-"15421.png":"Слава",
-"15490.png":"Тедди",
-"15501.png":"Босс",
-"15519.png":"Майрс",
-"15736.png":"Ёлка авто",
-"15738.png":"Сноуборд",
-"15739.png":"Багажник",
-"15740.png":"Круг",
-"15851.png":"Bape",
-"15888.png":"Кобура",
-"15902.png":"Шлем",
-"16224.png":"Кепка",
-"16463.png":"Скейт",
-"16464.png":"Скейт",
-"16465.png":"Скейт",
-"16600.png":"Рука",
-"16608.png":"Рюкзак",
-"16665.png":"Меч",
-"16678.png":"Скейт",
-"16679.png":"Скейт",
-"16682.png":"Меч",
-"16774.png":"Топор",
-"16779.png":"Плащ",
-"16866.png":"Бампер",
-"17249.png":"Рюкзак",
-"17250.png":"Бита",
-"17251.png":"Очки",
-"17255.png":"Наушники",
-"17256.png":"Bearbrick",
-"17273.png":"Гелик",
-"17976.png":"Венок",
-"17996.png":"Ушанка",
-"17997.png":"Ушанка",
-"18203.png":"Киса",
-"18895.png":"Лошадь",
-"19.png":"Баба",
-"194.png":"Хищник",
-"206.png":"Пацан",
-"79.png":"OffWhite",
-"8599.png":"Василич",
-"8793.png":"Броник",
-"94.png":"Рубашка",
-"icon-gold-vip.png":"VIP Gold",
-"icon-platinum-vip.png":"VIP Platinum",
-"icon-silver-vip.png":"VIP Silver"
-};
+const strip = document.getElementById("strip");
+
+let canSpin = true;
+
+// создаём ленту
+function buildStrip(){
+strip.innerHTML = "";
+
+for(let i=0;i<40;i++){
+let item = items[Math.floor(Math.random()*items.length)];
+
+let div = document.createElement("div");
+div.className = "card";
+
+div.innerHTML = `
+<img src="${item.img}">
+<div>${item.name}</div>
+`;
+
+strip.appendChild(div);
+}
+}
+
+// система шансов
+function getWin(){
+let pool = [];
+
+items.forEach(i=>{
+let count = Math.floor(i.chance * 10);
+for(let j=0;j<count;j++){
+pool.push(i);
+}
+});
+
+return pool[Math.floor(Math.random()*pool.length)];
+}
 
 function spin(){
-let result = document.getElementById("result");
 
-result.innerHTML = "КРУТИМ...";
+if(!canSpin) return;
+canSpin = false;
 
-let index = Math.floor(Math.random() * prizes.length);
+document.getElementById("result").innerText = "КРУТИМ...";
 
-setTimeout(() => {
-result.innerHTML =
-"<img src='" + prizes[index] + "' width='200'><br>" +
-names[prizes[index]];
-}, 2000);
+buildStrip();
+
+let win = getWin();
+
+// движение ленты
+let offset = -(Math.floor(Math.random()*25)+20)*140;
+
+strip.style.transform = `translateX(${offset}px)`;
+
+// остановка
+setTimeout(()=>{
+
+document.getElementById("result").innerHTML =
+"🎉 Выпало: <b>"+win.name+"</b><br><img src='"+win.img+"' width='120'>";
+
+canSpin = true;
+
+},5000);
+
 }
