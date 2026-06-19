@@ -21,13 +21,10 @@ const strip = document.getElementById("strip");
 
 let canSpin = true;
 
-let position = 0;
-
-// ===== ЛЕНТА =====
+// ===== создаём ленту ОДИН РАЗ =====
 function buildStrip(){
 strip.innerHTML = "";
 
-// фиксированная длинная лента
 for(let i=0;i<200;i++){
 let item = items[Math.floor(Math.random()*items.length)];
 
@@ -43,7 +40,7 @@ strip.appendChild(div);
 }
 }
 
-// ===== ВЫБОР ВЫИГРЫША =====
+// ===== выбираем победителя =====
 function getWinIndex(){
 let pool = [];
 
@@ -66,39 +63,46 @@ canSpin = false;
 
 document.getElementById("result").innerText = "КРУТИМ...";
 
-// сброс анимации
+// ❗ ВАЖНО: НЕ СТИРАЕМ ЛЕНТУ
+if(strip.childElementCount === 0){
+buildStrip();
+}
+
+// фиксируем старт
 strip.style.transition = "none";
 strip.style.transform = "translateX(0px)";
 
-// пересобираем ленту
-buildStrip();
+// даём браузеру РЕНДЕР (ВАЖНО!)
+requestAnimationFrame(()=>{
 
-// даём браузеру обновить DOM
-setTimeout(()=>{
+requestAnimationFrame(()=>{
 
 strip.style.transition = "transform 6s cubic-bezier(.12,.8,.12,1)";
 
 let winIndex = getWinIndex();
 
-// фикс: всегда попадаем в середину
 let cardWidth = 150;
-let centerOffset = (200 * cardWidth) / 2;
+let centerPosition = window.innerWidth / 2;
 
-let target = (winIndex * cardWidth) - centerOffset + (window.innerWidth / 2);
+let target = winIndex * cardWidth;
 
-position = -target;
+let offset = centerPosition - target;
 
-strip.style.transform = `translateX(${position}px)`;
+strip.style.transform = `translateX(${offset}px)`;
 
-// результат строго тот же индекс
-let winItem = items[winIndex];
+// результат (ТОЧНО ТОТ ЖЕ)
+let win = items[winIndex];
 
 setTimeout(()=>{
+
 document.getElementById("result").innerHTML =
-"🎉 Выпало: <b>"+winItem.name+"</b><br><img src='"+winItem.img+"' width='120'>";
+"🎉 Выпало: <b>"+win.name+"</b><br><img src='"+win.img+"' width='120'>";
 
 canSpin = true;
+
 },6000);
 
-},50);
+});
+
+});
 }
